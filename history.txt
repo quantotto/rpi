@@ -307,3 +307,5 @@
   307  cd ../capture/
   308  nano audio.sh
   309  sudo xargs -a packages_list.txt apt install
+  310  docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+  311  sudo apt-get install -yy coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools bsdtar libcap2-bin grep rsync xz-utils file git curl bc
