@@ -1,0 +1,11 @@
+--index-url http://devops.quantotto.io:16280 --trusted-host devops.quantotto.io
+quantotto.hydra-py-sdk
+quantotto.mgmt-py-sdk
+quantotto.auth
+quantotto.common
+quantotto.media-handler
+quantotto.proto
+quantotto.cli_agent
+quantotto.capture
+quantotto.discovery
+

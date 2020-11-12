@@ -1,0 +1,309 @@
+    1  raspi-config
+    2  sudo raspi-config
+    3  ls
+    4  python
+    5  python3
+    6  fg
+    7  python3 -m venv .venv
+    8  sudo apt-get install python3-venv
+    9  python3 -m venv .venv
+   10  source /home/pi/.venv/bin/activate
+   11  pip list
+   12  pip install -U pip
+   13  nano requirements.txt
+   14  nano install_py_reqs.sh
+   15  chmod ugo+x install_py_reqs.sh
+   16  nano simple.py
+   17  deactivate
+   18  ./install_py_reqs.sh
+   19  ls
+   20  nano install_py_reqs.sh
+   21  ./install_py_reqs.sh
+   22  cat requirements.txt
+   23  nano install_py_reqs.sh
+   24  nano requirements.txt
+   25  ./install_py_reqs.sh
+   26  sudo apt update && sudo apt upgrade
+   27  sudo apt-get -yy install libxml2-dev libxslt
+   28  sudo apt-get -yy install libxml2-dev libxslt-dev
+   29  ./install_py_reqs.sh
+   30  sudo apt-get install -yy libavformat-dev libavcodec-dev libavdevice-dev libavutil-dev libavfilter-dev libswscale-dev libswresample-dev python3-dev
+   31  ./install_py_reqs.sh
+   32  nano requirements.txt
+   33  ./install_py_reqs.sh
+   34  pip list
+   35  source /home/pi/.venv/bin/activate
+   36  pip list
+   37  pip install opencv-contrib-python==4.1.1.26
+   38  cp requirements.txt qto_requirements.txt
+   39  nano qto_requirements.txt
+   40  nano requirements.txt
+   41  nano install_py_reqs.sh
+   42  ./install_py_reqs.sh
+   43  sudo apt-get install -yy git
+   44  ./install_py_reqs.sh
+   45  mkdir agents
+   46  cd agents
+   47  nano discovery_config.yaml
+   48  cat discovery_config.yaml
+   49  wsta
+   50  nano run_discovery.py
+   51  pip list
+   52  python run_discovery.py
+   53  sudo apt-get install -yy libjasper
+   54  sudo apt-get install -yy libjasper1
+   55  python run_discovery.py
+   56  sudo apt-get search libImath
+   57  sudo apt search libImath
+   58  sudo apt-get install -yy libilmbase23
+   59  python run_discovery.py
+   60  sudo apt search libIlmImf
+   61  sudo apt-get install -yy libopenexr-dev libilmbase-dev libgstreamer1.0-dev
+   62  python run_discovery.py
+   63  sudo apt-get install -yy libqtgui4
+   64  python run_discovery.py
+   65  sudo apt-get install -yy libqttest4
+   66  sudo apt-get install -yy libqttest
+   67  sudo apt-get install -yy libqt
+   68  apt search  libQtTest
+   69  sudo apt install -yy libqt4-test
+   70  python run_discovery.py
+   71  sudo apt install -yy liblapack3
+   72  python run_discovery.py
+   73  sudo apt install -yy libcblas3
+   74  sudo apt install -yy libatlas3-base
+   75  python run_discovery.py
+   76  pip uninstall opencv-python
+   77  pip uninstall opencv-contrib-python
+   78  pip install opencv-contrib-python==4.1.0.25
+   79  pip install opencv-python==4.1.0.25
+   80  python
+   81  python run_discovery.py
+   82  pip install cryptography==3.1
+   83  python run_discovery.py
+   84  nano discovery.sh
+   85  sudo chmod ugo+x discovery.sh
+   86  ./discovery.sh
+   87  nano discovery.sh
+   88  ./discovery.sh
+   89  ./discovery.sh discovery_config.yaml
+   90  ls
+   91  nano discovery_config.yaml
+   92  cat discovery.sh
+   93  export CUSTOMER_ID=qto
+   94  export HYDRA_API_URL=https://devops.quantotto.io/hydra-api/
+   95  export HYDRA_PUBLIC_URL=https://devops.quantotto.io/hydra-public/
+   96  export HYDRA_CLIENT_ID=config_api_backendapp
+   97  export HYDRA_CLIENT_SECRET=hRun6032ae~Jaz3CNve4Q7rqhI
+   98  python run_discovery.py discovery_config.yaml
+   99  export HYDRA_CLIENT_ID=qto
+  100  export HYDRA_CLIENT_SECRET=MVs3QeH3SMq~Cr4oKyHM67qk-s
+  101  python run_discovery.py discovery_config.yaml
+  102  ls
+  103  python run_discovery.py discovery_config.yaml
+  104  python
+  105  pip install pybluez==0.22
+  106  cat discovery_config.yaml
+  107  nano discovery_config.yaml
+  108  sudo apt install -y libportaudio2
+  109  python run_discovery.py discovery_config.yaml
+  110  ls
+  111  cat discovery.log
+  112  python run_discovery.py discovery_config.yaml
+  113  pip install -U quantotto.mgmt_py_sdk
+  114  pip install -U quantotto.mgmt_py_sdk --index-url http://devops.quantotto.io:16280 --trusted-host devops.quantotto.io
+  115  nano run_discovery.py
+  116  python run_discovery.py discovery_config.yaml
+  117  find ../.venv -name ws_runner.py
+  118  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  119  python run_discovery.py discovery_config.yaml
+  120  nano run_discovery.py
+  121  pip install -U quantotto.common --index-url http://devops.quantotto.io:16280 --trusted-host devops.quantotto.io
+  122  python run_discovery.py discovery_config.yaml
+  123  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  124  python run_discovery.py discovery_config.yaml
+  125  nano run_discovery.py
+  126  pip install -U quantotto.common --index-url http://devops.quantotto.io:16280 --trusted-host devops.quantotto.io
+  127  python run_discovery.py discovery_config.yaml
+  128  pip install -U quantotto.common --index-url http://devops.quantotto.io:16280 --trusted-host devops.quantotto.io
+  129  python run_discovery.py discovery_config.yaml
+  130  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  131  python run_discovery.py discovery_config.yaml
+  132  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  133  python run_discovery.py discovery_config.yaml
+  134  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  135  python run_discovery.py discovery_config.yaml
+  136  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  137  python run_discovery.py discovery_config.yaml
+  138  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  139  python run_discovery.py discovery_config.yaml
+  140  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  141  python run_discovery.py discovery_config.yaml
+  142  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  143  python run_discovery.py discovery_config.yaml
+  144  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  145  python run_discovery.py discovery_config.yaml
+  146  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  147  python run_discovery.py discovery_config.yaml
+  148  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  149  python run_discovery.py discovery_config.yaml
+  150  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  151  python run_discovery.py discovery_config.yaml
+  152  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  153  python run_discovery.py discovery_config.yaml
+  154  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  155  cat ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  156  pip install -U quantotto.common --index-url http://devops.quantotto.io:16280 --trusted-host devops.quantotto.io
+  157  pip install -U quantotto.discovery --index-url http://devops.quantotto.io:16280 --trusted-host devops.quantotto.io
+  158  python run_discovery.py discovery_config.yaml
+  159  pip install -U quantotto.common --index-url http://devops.quantotto.io:16280 --trusted-host devops.quantotto.io
+  160  python run_discovery.py discovery_config.yaml
+  161  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  162  python run_discovery.py discovery_config.yaml
+  163  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  164  python run_discovery.py discovery_config.yaml
+  165  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  166  python run_discovery.py discovery_config.yaml
+  167  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  168  python run_discovery.py discovery_config.yaml
+  169  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  170  python run_discovery.py discovery_config.yaml
+  171  pip install -U quantotto.discovery --index-url http://devops.quantotto.io:16280 --trusted-host devops.quantotto.io
+  172  pip install -U quantotto.common --index-url http://devops.quantotto.io:16280 --trusted-host devops.quantotto.io
+  173  python run_discovery.py discovery_config.yaml
+  174  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  175  python run_discovery.py discovery_config.yaml
+  176  clear
+  177  ls
+  178  cd agents/
+  179  ls
+  180  cat discovery
+  181  cat discovery.
+  182  cat discovery.sh
+  183  export CUSTOMER_ID=qto
+  184  export HYDRA_API_URL=https://devops.quantotto.io/hydra-api/
+  185  export HYDRA_PUBLIC_URL=https://devops.quantotto.io/hydra-public/
+  186  export HYDRA_CLIENT_ID=config_api_backendapp
+  187  export HYDRA_CLIENT_SECRET=hRun6032ae~Jaz3CNve4Q7rqhI
+  188  source /home/pi/.venv/bin/activate
+  189  python run_discovery.py discovery_config.yaml
+  190  export HYDRA_CLIENT_ID=qto
+  191  export HYDRA_CLIENT_SECRET=MVs3QeH3SMq~Cr4oKyHM67qk-s
+  192  python run_discovery.py discovery_config.yaml
+  193  cat discovery_config.yaml
+  194  find ../.venv -name runner.py
+  195  nano ../.venv/lib/python3.7/site-packages/quantotto/discovery/agent/runner.py
+  196  python run_discovery.py discovery_config.yaml
+  197  nano ../.venv/lib/python3.7/site-packages/quantotto/discovery/agent/runner.py
+  198  python run_discovery.py discovery_config.yaml
+  199  export FERNET_KEY="fBa77hDchsGbnKL2tw7-o6asYt268MdH0SZsfOdBZ8Q="
+  200  python run_discovery.py discovery_config.yaml
+  201  find / -name devicemgmt.wsdl
+  202  sudo find / -name devicemgmt.wsdl
+  203  python
+  204  pip list
+  205  cd ../.venv
+  206  ls
+  207  cd lib
+  208  ls
+  209  ls -l python3.4/
+  210  ls -l python3.4/site-packages/
+  211  rm -rf python3.4/
+  212  cd ..
+  213  cd ../agents/
+  214  pip install wsdl
+  215  pip install onvif-zeep
+  216  pip uninstall onvif-zeep
+  217  pip install onvif-zeep
+  218  pip uninstall onvif-zeep
+  219  cd ../
+  220  cd .venv/
+  221  ls
+  222  cd lib
+  223  ls
+  224  ls python3.4/site-packages/
+  225  mv -R python3.4/site-packages/wsdl python3.7/site-packages/
+  226  cp -R python3.4/site-packages/wsdl python3.7/site-packages/
+  227  ls python3.7/site-packages/
+  228  rm -rf python3.4/
+  229  cd ../../agents/
+  230  python run_discovery.py discovery_config.yaml
+  231  history
+  232  nano ../.venv/lib/python3.7/site-packages/quantotto/discovery/agent/runner.py
+  233  cat ../.venv/lib/python3.7/site-packages/quantotto/discovery/agent/runner.py
+  234  cat ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  235  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  236  cat ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  237  python run_discovery.py discovery_config.yaml
+  238  nano ../.venv/lib/python3.7/site-packages/quantotto/common/ws_runner.py
+  239  python run_discovery.py discovery_config.yaml
+  240  history
+  241  pip install -U quantotto.discovery --index-url http://devops.quantotto.io:16280 --trusted-host devops.quantotto.io
+  242  python run_discovery.py discovery_config.yaml
+  243  cd agents/
+  244  cat discovery.sh
+  245  source /home/pi/.venv/bin/activate
+  246  python'
+  247  python
+  248  cd agents
+  249  python
+  250  cat discovery.sh
+  251  source /home/pi/.venv/bin/activate
+  252  python
+  253  python test_audio_discovery.py
+  254  cat discovery.sh
+  255  export CUSTOMER_ID=qto
+  256  export HYDRA_API_URL=https://devops.quantotto.io/hydra-api/
+  257  export HYDRA_PUBLIC_URL=https://devops.quantotto.io/hydra-public/
+  258  export HYDRA_CLIENT_ID=qto
+  259  export HYDRA_CLIENT_SECRET=MVs3QeH3SMq~Cr4oKyHM67qk-s
+  260  python test_audio_discovery.py
+  261  python
+  262  nano test_audio_discovery.py
+  263  pip install -U quantotto.discovery --index-url http://devops.quantotto.io:16280 --trusted-host devops.quantotto.io
+  264  python test_audio_discovery.py
+  265  nano test_audio_discovery.py
+  266  python test_audio_discovery.py
+  267  nano test_audio_discovery.py
+  268  python test_audio_discovery.py
+  269  cat test_audio_discovery.py
+  270  nano test_bt_discovery.py
+  271  python test_bt_discovery.py
+  272  nano test_bt_discovery.py
+  273  nano test_audio_discovery.py
+  274  python test_audio_discovery.py
+  275  ls
+  276  cat discovery.sh
+  277  ./discovery.sh discovery_config.yaml
+  278  nano test_audio_discovery.py
+  279  python test_audio_discovery.py
+  280  nano test_audio_discovery.py
+  281  python test_audio_discovery.py
+  282  nano test_audio_discovery.py
+  283  python test_audio_discovery.py
+  284  pip install -U quantotto.discovery --index-url http://devops.quantotto.io:16280 --trusted-host devops.quantotto.io
+  285  python test_audio_discovery.py
+  286  pip install -U quantotto.mgmt_py_sdk --index-url http://devops.quantotto.io:16280 --trusted-host devops.quantotto.io
+  287  python test_audio_discovery.py
+  288  cat test_bt_discovery.py
+  289  cat test_audio_discovery.py
+  290  nano test_bt_discovery.py
+  291  python test_bt_discovery.py
+  292  pip install -U quantotto.discovery --index-url http://devops.quantotto.io:16280 --trusted-host devops.quantotto.io
+  293  python test_bt_discovery.py
+  294  ls
+  295  cd agents
+  296  mkdir discovery
+  297  ls
+  298  mkdir capture
+  299  cd captur
+  300  cd capture/
+  301  nano audio.sh
+  302  nano run_capture.py
+  303  cd ..
+  304  cd discovery/
+  305  ls
+  306  nano discovery.sh
+  307  cd ../capture/
+  308  nano audio.sh
+  309  sudo xargs -a packages_list.txt apt install
