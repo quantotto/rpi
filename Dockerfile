@@ -6,7 +6,7 @@ RUN apt-get -yy update && apt-get -yy upgrade
 
 COPY packages_list.txt /tmp/packages_list.txt
 
-RUN xargs -a packages_list.txt apt-get -yy install
+RUN xargs -a /tmp/packages_list.txt apt-get -yy install
 
 RUN mkdir -p /opt/quantotto
 
