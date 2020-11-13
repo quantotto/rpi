@@ -1,6 +1,16 @@
 import docker
 import click
+import os
 
+
+def build_partition_container(image_name: str, partition: str):
+    cli = docker.from_env()
+    cli.images.build(
+        path=".",
+        tag=image_name,
+        dockerfile=f"Dockerfile.{partition}",
+        network_mode="host"
+    )
 
 def create_partition_tar(docker_tag: str, outfile: str, retries: int=1):
     if retries < 0:
@@ -28,15 +38,20 @@ def create_partition_tar(docker_tag: str, outfile: str, retries: int=1):
 @click.command()
 @click.version_option()
 @click.option("--force-rebuild", is_flag=True, default=False)
+@click.option("--image-prefix", type=str, required=True, default="quantotto/rpi")
 @click.option("--tmp-dir", type=str, required=True, default="./tmp")
-def build(force_rebuild: bool, tmp_dir: str):
+def build(force_rebuild: bool, image_prefix: str, tmp_dir: str):
     """Build Quantotto Raspberry Pi image
     with all the pre-requisites and Quantotto
     application packages
     """
     print(f"Building with force_rebuild={force_rebuild}; temp dir={tmp_dir}")
-
-    create_partition_tar("quantotto/rpi:latest", f"{tmp_dir}/root.tar")
+    os.makedirs(tmp_dir, exist_ok=True)
+    partitions = ["boot", "root"]
+    for p in partitions:
+        image_name = f"{image_prefix}_{p}:latest"
+        build_partition_container(image_name, p)
+        create_partition_tar(image_name, f"{tmp_dir}/{p}.tar")
 
 
 if __name__ == '__main__':

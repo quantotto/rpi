@@ -25,8 +25,12 @@ RUN pip install -r /tmp/qto_requirements.txt
 
 COPY simple.py ${VIRTUAL_ENV}/lib/python3.7/site-packages/zeep/xsd/types/simple.py
 
-COPY run_capture.py ${QUANTOTTO_HOME}/
-COPY run_discovery.py ${QUANTOTTO_HOME}/
+COPY app/run_capture.py ${QUANTOTTO_HOME}/
+COPY app/run_discovery.py ${QUANTOTTO_HOME}/
+
+COPY root/dhcpcd.conf /etc/dhcpcd.conf
+COPY root/wpa_supplicant.conf /etc/wpa/wpa_supplicant.conf
+
 
 CMD ["bash"]
 
