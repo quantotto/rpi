@@ -16,7 +16,8 @@ def build_partition_container(image_name: str, partition: str):
         print(
             json.loads(
                 output.decode()
-            )["stream"]
+            ).get("stream", ""),
+            end=''
         )
 
 def create_partition_tar(docker_tag: str, outfile: str, retries: int=1):
