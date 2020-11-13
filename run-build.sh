@@ -4,6 +4,14 @@
 
 # All rights reserved.
 
+unmount_image(){
+	sync
+	sleep 1
+	local LOOP_DEVICES
+	LOOP_DEVICES=$(losetup --list | grep "$(basename "${1}")" | cut -f1 -d' ')
+	done
+}
+
 IMG_FILE="quantotto.img"
 EXPORT_ROOTFS_DIR="./root"
 EXPORT_ROOTFS_DIR="./boot"
