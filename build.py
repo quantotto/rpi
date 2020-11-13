@@ -37,15 +37,14 @@ def create_partition_tar(docker_tag: str, outfile: str, retries: int=1):
 
 @click.command()
 @click.version_option()
-@click.option("--force-rebuild", is_flag=True, default=False)
 @click.option("--image-prefix", type=str, required=True, default="quantotto/rpi")
 @click.option("--tmp-dir", type=str, required=True, default="./tmp")
-def build(force_rebuild: bool, image_prefix: str, tmp_dir: str):
+def build(image_prefix: str, tmp_dir: str):
     """Build Quantotto Raspberry Pi image
     with all the pre-requisites and Quantotto
     application packages
     """
-    print(f"Building with force_rebuild={force_rebuild}; temp dir={tmp_dir}")
+    print(f"Building with temp dir={tmp_dir}")
     os.makedirs(tmp_dir, exist_ok=True)
     partitions = ["boot", "root"]
     for p in partitions:
