@@ -13,7 +13,11 @@ def build_partition_container(image_name: str, partition: str):
         dockerfile=f"Dockerfile.{partition}",
         network_mode="host"
     ):
-        print(json.load(output)["stream"])
+        print(
+            json.loads(
+                output.decode()
+            )["stream"]
+        )
 
 def create_partition_tar(docker_tag: str, outfile: str, retries: int=1):
     if retries < 0:
