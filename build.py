@@ -22,9 +22,12 @@ def create_partition_tar(docker_tag: str, outfile: str, retries: int=1):
         retries_left -= 1
         try:
             cnt = cli.containers.run(docker_tag, detach=True)
+            print("Writing image tar")
             with open(outfile, "wb") as tar:
-                for chunk in cnt.export():
-                    tar.write(chunk)
+                with click.progressbar(length=2*1024*1024*1024) as bar:
+                    for chunk in cnt.export():
+                        size = tar.write(chunk)
+                        bar.update(size)
         except Exception as e:
             if retries_left > 0:
                 continue
