@@ -1,16 +1,19 @@
 import docker
+from docker import APIClient
 import click
+import json
 import os
 
 
 def build_partition_container(image_name: str, partition: str):
-    cli = docker.from_env()
-    cli.images.build(
+    cli = APIClient()
+    for output in cli.build(
         path=".",
         tag=image_name,
         dockerfile=f"Dockerfile.{partition}",
         network_mode="host"
-    )
+    ):
+        print(json.load(output)["stream"])
 
 def create_partition_tar(docker_tag: str, outfile: str, retries: int=1):
     if retries < 0:
@@ -49,7 +52,7 @@ def build(image_prefix: str, tmp_dir: str):
     """
     print(f"Building with temp dir={tmp_dir}")
     os.makedirs(tmp_dir, exist_ok=True)
-    partitions = ["boot", "root"]
+    partitions = ["root"]
     for p in partitions:
         image_name = f"{image_prefix}_{p}:latest"
         build_partition_container(image_name, p)
