@@ -51,6 +51,7 @@ def create_partition_tar(docker_tag: str, outfile: str, retries: int=1):
 def build_final_image(in_dir: str, out_dir: str):
     subprocess.run(
         args=[
+            "sudo",
             "./run-build.sh",
             in_dir,
             out_dir
@@ -63,7 +64,8 @@ def build_final_image(in_dir: str, out_dir: str):
 @click.option("--image-prefix", type=str, required=True, default="quantotto/rpi")
 @click.option("--tmp-dir", type=str, required=True, default="./tmp")
 @click.option("--out-dir", type=str, required=True, default="./out")
-def build(image_prefix: str, tmp_dir: str, out_dir: str):
+@click.option("--keep-tmp", is_flag=True, default=False)
+def build(image_prefix: str, tmp_dir: str, out_dir: str, keep_tmp: bool):
     """Build Quantotto Raspberry Pi image
     with all the pre-requisites and Quantotto
     application packages
@@ -80,7 +82,8 @@ def build(image_prefix: str, tmp_dir: str, out_dir: str):
         build_final_image(tmp_dir, out_dir)
         print(f"Image done and saved as {out_dir}/quantotto.zip")
     finally:
-        shutil.rmtree(tmp_dir, ignore_errors=True)
+        if not keep_tmp:
+            shutil.rmtree(tmp_dir, ignore_errors=True)
 
 if __name__ == '__main__':
     build()

@@ -28,10 +28,10 @@ mkdir -p "${ROOTFS_DIR}"
 
 rm -rf "${EXPORT_ROOTFS_DIR}"
 mkdir -p "${EXPORT_ROOTFS_DIR}"
-tar xf root.tar -C "${EXPORT_ROOTFS_DIR}"
+tar xf root.tar -C "${EXPORT_ROOTFS_DIR}" --numeric-owner
 
 mkdir -p "${EXPORT_ROOTFS_DIR}"/boot
-tar xf boot.tar -C "${EXPORT_ROOTFS_DIR}"/boot
+tar xf boot.tar -C "${EXPORT_ROOTFS_DIR}"/boot --numeric-owner
 touch "${EXPORT_ROOTFS_DIR}"/boot/ssh
 
 
