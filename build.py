@@ -77,6 +77,7 @@ def build(image_prefix: str, tmp_dir: str, out_dir: str):
         build_partition_container(image_name, p)
         create_partition_tar(image_name, f"{tmp_dir}/{p}.tar")
     build_final_image(tmp_dir, out_dir)
+    shutil.rmtree(tmp_dir, ignore_errors=True)
     print(f"Image done and saved as {out_dir}/quantotto.zip")
 
 
