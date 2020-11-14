@@ -9,6 +9,7 @@ source common
 INPUT_DIR=$1
 OUTPUT_DIR=$2
 
+
 rm -rf ${OUTPUT_DIR}
 mkdir -p ${OUTPUT_DIR}
 
@@ -28,10 +29,10 @@ mkdir -p "${ROOTFS_DIR}"
 
 rm -rf "${EXPORT_ROOTFS_DIR}"
 mkdir -p "${EXPORT_ROOTFS_DIR}"
-tar xf root.tar -C "${EXPORT_ROOTFS_DIR}" --numeric-owner
+tar xf ${INPUT_DIR}/root.tar -C "${EXPORT_ROOTFS_DIR}" --numeric-owner
 
 mkdir -p "${EXPORT_ROOTFS_DIR}"/boot
-tar xf boot.tar -C "${EXPORT_ROOTFS_DIR}"/boot --numeric-owner
+tar xf  ${INPUT_DIR}/boot.tar -C "${EXPORT_ROOTFS_DIR}"/boot --numeric-owner
 touch "${EXPORT_ROOTFS_DIR}"/boot/ssh
 
 
@@ -150,6 +151,7 @@ zerofree "${ROOT_DEV}"
 unmount_image "${IMG_FILE}"
 rm -rf "${EXPORT_ROOTFS_DIR}"
 rm -rf "${ROOTFS_DIR}"
+pushd ${OUTPUT_DIR}
 zip -v "${IMG_ZIP_FILE}" "${IMG_FILE}"
 rm -rf "${IMG_FILE}"
 
