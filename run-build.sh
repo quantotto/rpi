@@ -9,6 +9,7 @@ source common
 INPUT_DIR=$1
 OUTPUT_DIR=$2
 
+rm -rf ${OUTPUT_DIR}
 mkdir -p ${OUTPUT_DIR}
 
 IMG_FILE="${OUTPUT_DIR}/quantotto.img"

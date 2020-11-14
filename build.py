@@ -3,6 +3,7 @@ from docker import APIClient
 import click
 import json
 import os
+import shutil
 import subprocess
 
 
@@ -68,6 +69,7 @@ def build(image_prefix: str, tmp_dir: str, out_dir: str):
     application packages
     """
     print(f"Building with temp dir={tmp_dir}")
+    shutil.rmtree(tmp_dir, ignore_errors=True)
     os.makedirs(tmp_dir, exist_ok=True)
     partitions = ["root"]
     for p in partitions:
