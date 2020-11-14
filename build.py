@@ -79,6 +79,7 @@ def build(image_prefix: str, tmp_dir: str, out_dir: str, keep_tmp: bool):
             image_name = f"{image_prefix}_{p}:latest"
             build_partition_container(image_name, p)
             create_partition_tar(image_name, f"{tmp_dir}/{p}.tar")
+        shutil.copy("boot.tar", f"{tmp_dir}/boot.tar")
         build_final_image(tmp_dir, out_dir)
         print(f"Image done and saved as {out_dir}/quantotto.zip")
     finally:
