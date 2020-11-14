@@ -83,6 +83,7 @@ def build(image_prefix: str, tmp_dir: str, out_dir: str, keep_tmp: bool):
         print(f"Image done and saved as {out_dir}/quantotto.zip")
     finally:
         if not keep_tmp:
+            print(f"Deleting {tmp_dir}")
             shutil.rmtree(tmp_dir, ignore_errors=True)
 
 if __name__ == '__main__':
