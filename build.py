@@ -77,7 +77,8 @@ def build(image_prefix: str, tmp_dir: str, out_dir: str, keep_tmp: bool):
                 "sudo",
                 "rm",
                 "-rf",
-                tmp_dir
+                tmp_dir,
+                out_dir
             ]
         )
         os.makedirs(tmp_dir, exist_ok=True)
