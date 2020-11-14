@@ -3,6 +3,7 @@ from docker import APIClient
 import click
 import json
 import os
+import subprocess
 
 
 def build_partition_container(image_name: str, partition: str):
@@ -46,11 +47,22 @@ def create_partition_tar(docker_tag: str, outfile: str, retries: int=1):
                 cnt.remove()
         break
 
+def build_final_image(in_dir: str, out_dir: str):
+    subprocess.run(
+        args=[
+            "./run-build.sh",
+            in_dir,
+            out_dir
+        ],
+        env=os.environ
+    )
+
 @click.command()
 @click.version_option()
 @click.option("--image-prefix", type=str, required=True, default="quantotto/rpi")
 @click.option("--tmp-dir", type=str, required=True, default="./tmp")
-def build(image_prefix: str, tmp_dir: str):
+@click.option("--out-dir", type=str, required=True, default="./out")
+def build(image_prefix: str, tmp_dir: str, out_dir: str):
     """Build Quantotto Raspberry Pi image
     with all the pre-requisites and Quantotto
     application packages
@@ -62,6 +74,8 @@ def build(image_prefix: str, tmp_dir: str):
         image_name = f"{image_prefix}_{p}:latest"
         build_partition_container(image_name, p)
         create_partition_tar(image_name, f"{tmp_dir}/{p}.tar")
+    build_final_image(tmp_dir, out_dir)
+    print(f"Image done and saved as {out_dir}/quantotto.zip")
 
 
 if __name__ == '__main__':

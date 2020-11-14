@@ -4,13 +4,18 @@
 
 # All rights reserved.
 
-source ../common
+source common
 
-IMG_FILE="quantotto.img"
-IMG_ZIP_FILE="quantotto.zip"
+INPUT_DIR=$1
+OUTPUT_DIR=$2
 
-EXPORT_ROOTFS_DIR="./root"
-ROOTFS_DIR="./rootfs"
+mkdir -p ${OUTPUT_DIR}
+
+IMG_FILE="${OUTPUT_DIR}/quantotto.img"
+IMG_ZIP_FILE="${OUTPUT_DIR}/quantotto.zip"
+
+EXPORT_ROOTFS_DIR="${INPUT_DIR}/root"
+ROOTFS_DIR="${INPUT_DIR}/rootfs"
 
 unmount_image "${IMG_FILE}"
 
