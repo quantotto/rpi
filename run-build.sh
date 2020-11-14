@@ -152,6 +152,7 @@ unmount_image "${IMG_FILE}"
 rm -rf "${EXPORT_ROOTFS_DIR}"
 rm -rf "${ROOTFS_DIR}"
 pushd ${OUTPUT_DIR}
-zip -v "${IMG_ZIP_FILE}" "${IMG_FILE}"
+zip -v quantotto.zip quantotto.img
+popd
 rm -rf "${IMG_FILE}"
 
