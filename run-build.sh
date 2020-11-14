@@ -26,7 +26,7 @@ tar xf root.tar -C "${EXPORT_ROOTFS_DIR}"
 
 mkdir -p "${EXPORT_ROOTFS_DIR}"/boot
 tar xf boot.tar -C "${EXPORT_ROOTFS_DIR}"/boot
-# touch "${EXPORT_ROOTFS_DIR}"/boot/ssh
+touch "${EXPORT_ROOTFS_DIR}"/boot/ssh
 
 
 BOOT_SIZE="$((256 * 1024 * 1024))"
@@ -118,10 +118,12 @@ IMGID="$(dd if="${IMG_FILE}" skip=440 bs=1 count=4 2>/dev/null | xxd -e | cut -f
 BOOT_PARTUUID="${IMGID}-01"
 ROOT_PARTUUID="${IMGID}-02"
 
-sed -i "s/BOOTDEV/PARTUUID=${BOOT_PARTUUID}/" "${ROOTFS_DIR}/etc/fstab"
-sed -i "s/ROOTDEV/PARTUUID=${ROOT_PARTUUID}/" "${ROOTFS_DIR}/etc/fstab"
+OLDIMGID="$(grep PARTUUID "${ROOTFS_DIR}/etc/fstab" | awk -F- '{ print $1 }' | awk -F= '{ print $2 }' | head -n 1)"
 
-sed -i "s/ROOTDEV/PARTUUID=${ROOT_PARTUUID}/" "${ROOTFS_DIR}/boot/cmdline.txt"
+sed -i "s/${OLDIMGID}-01/${BOOT_PARTUUID}/" "${ROOTFS_DIR}/etc/fstab"
+sed -i "s/${OLDIMGID}-02/${ROOT_PARTUUID}/" "${ROOTFS_DIR}/etc/fstab"
+
+sed -i "s/${OLDIMGID}-02/${ROOT_PARTUUID}/" "${ROOTFS_DIR}/boot/cmdline.txt"
 
 
 on_chroot << EOF
