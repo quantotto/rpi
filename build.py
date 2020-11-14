@@ -72,7 +72,7 @@ def build(image_prefix: str, tmp_dir: str, out_dir: str, keep_tmp: bool):
     """
     print(f"Building with temp dir={tmp_dir}")
     try:
-        subprocess.Popen(
+        subprocess.run(
             args=[
                 "sudo",
                 "rm",
