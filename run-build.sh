@@ -4,23 +4,18 @@
 
 # All rights reserved.
 
-unmount_image(){
-	sync
-	sleep 1
-	local LOOP_DEVICES
-	LOOP_DEVICES=$(losetup --list | grep "$(basename "${1}")" | cut -f1 -d' ')
-	done
-}
+source ../common
 
 IMG_FILE="quantotto.img"
+IMG_ZIP_FILE="quantotto.zip"
+
 EXPORT_ROOTFS_DIR="./root"
-EXPORT_ROOTFS_DIR="./boot"
 ROOTFS_DIR="./rootfs"
-BOOTFS_DIR="./bootfs"
 
 unmount_image "${IMG_FILE}"
 
 rm -f "${IMG_FILE}"
+rm -f "${IMG_ZIP_FILE}"
 
 rm -rf "${ROOTFS_DIR}"
 mkdir -p "${ROOTFS_DIR}"
@@ -29,10 +24,9 @@ rm -rf "${EXPORT_ROOTFS_DIR}"
 mkdir -p "${EXPORT_ROOTFS_DIR}"
 tar xf root.tar -C "${EXPORT_ROOTFS_DIR}"
 
-rm -rf "${EXPORT_BOOTFS_DIR}"
-mkdir -p "${EXPORT_BOOTFS_DIR}"
-tar xf boot.tar -C "${EXPORT_BOOTFS_DIR}"
-touch "${EXPORT_BOOTFS_DIR}"/ssh
+mkdir -p "${EXPORT_ROOTFS_DIR}"/boot
+tar xf boot.tar -C "${EXPORT_ROOTFS_DIR}"/boot
+# touch "${EXPORT_ROOTFS_DIR}"/boot/ssh
 
 
 BOOT_SIZE="$((256 * 1024 * 1024))"
@@ -109,3 +103,45 @@ mount -v "$BOOT_DEV" "${ROOTFS_DIR}/boot" -t vfat
 
 rsync -aHAXx --exclude /var/cache/apt/archives --exclude /boot "${EXPORT_ROOTFS_DIR}/" "${ROOTFS_DIR}/"
 rsync -rtx "${EXPORT_ROOTFS_DIR}/boot/" "${ROOTFS_DIR}/boot/"
+
+if [ ! -x "${ROOTFS_DIR}/usr/bin/qemu-arm-static" ]; then
+	cp /usr/bin/qemu-arm-static "${ROOTFS_DIR}/usr/bin/"
+fi
+
+if [ -e "${ROOTFS_DIR}/etc/ld.so.preload" ]; then
+	mv "${ROOTFS_DIR}/etc/ld.so.preload" "${ROOTFS_DIR}/etc/ld.so.preload.disabled"
+fi
+
+
+IMGID="$(dd if="${IMG_FILE}" skip=440 bs=1 count=4 2>/dev/null | xxd -e | cut -f 2 -d' ')"
+
+BOOT_PARTUUID="${IMGID}-01"
+ROOT_PARTUUID="${IMGID}-02"
+
+sed -i "s/BOOTDEV/PARTUUID=${BOOT_PARTUUID}/" "${ROOTFS_DIR}/etc/fstab"
+sed -i "s/ROOTDEV/PARTUUID=${ROOT_PARTUUID}/" "${ROOTFS_DIR}/etc/fstab"
+
+sed -i "s/ROOTDEV/PARTUUID=${ROOT_PARTUUID}/" "${ROOTFS_DIR}/boot/cmdline.txt"
+
+
+on_chroot << EOF
+if [ -x /etc/init.d/fake-hwclock ]; then
+	/etc/init.d/fake-hwclock stop
+fi
+if hash hardlink 2>/dev/null; then
+	hardlink -t /usr/share/doc
+fi
+EOF
+
+
+ROOT_DEV="$(mount | grep "${ROOTFS_DIR} " | cut -f1 -d' ')"
+
+unmount "${ROOTFS_DIR}"
+zerofree "${ROOT_DEV}"
+
+unmount_image "${IMG_FILE}"
+rm -rf "${EXPORT_ROOTFS_DIR}"
+rm -rf "${ROOTFS_DIR}"
+zip -v "${IMG_ZIP_FILE}" "${IMG_FILE}"
+rm -rf "${IMG_FILE}"
+
