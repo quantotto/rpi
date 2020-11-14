@@ -69,17 +69,18 @@ def build(image_prefix: str, tmp_dir: str, out_dir: str):
     application packages
     """
     print(f"Building with temp dir={tmp_dir}")
-    shutil.rmtree(tmp_dir, ignore_errors=True)
-    os.makedirs(tmp_dir, exist_ok=True)
-    partitions = ["root"]
-    for p in partitions:
-        image_name = f"{image_prefix}_{p}:latest"
-        build_partition_container(image_name, p)
-        create_partition_tar(image_name, f"{tmp_dir}/{p}.tar")
-    build_final_image(tmp_dir, out_dir)
-    shutil.rmtree(tmp_dir, ignore_errors=True)
-    print(f"Image done and saved as {out_dir}/quantotto.zip")
-
+    try:
+        shutil.rmtree(tmp_dir, ignore_errors=True)
+        os.makedirs(tmp_dir, exist_ok=True)
+        partitions = ["root"]
+        for p in partitions:
+            image_name = f"{image_prefix}_{p}:latest"
+            build_partition_container(image_name, p)
+            create_partition_tar(image_name, f"{tmp_dir}/{p}.tar")
+        build_final_image(tmp_dir, out_dir)
+        print(f"Image done and saved as {out_dir}/quantotto.zip")
+    finally:
+        shutil.rmtree(tmp_dir, ignore_errors=True)
 
 if __name__ == '__main__':
     build()
