@@ -72,7 +72,14 @@ def build(image_prefix: str, tmp_dir: str, out_dir: str, keep_tmp: bool):
     """
     print(f"Building with temp dir={tmp_dir}")
     try:
-        shutil.rmtree(tmp_dir, ignore_errors=True)
+        subprocess.Popen(
+            args=[
+                "sudo",
+                "rm",
+                "-rf",
+                tmp_dir
+            ]
+        )
         os.makedirs(tmp_dir, exist_ok=True)
         partitions = ["root"]
         for p in partitions:
@@ -85,7 +92,14 @@ def build(image_prefix: str, tmp_dir: str, out_dir: str, keep_tmp: bool):
     finally:
         if not keep_tmp:
             print(f"Deleting {tmp_dir}")
-            shutil.rmtree(tmp_dir, ignore_errors=True)
+            subprocess.Popen(
+                args=[
+                    "sudo",
+                    "rm",
+                    "-rf",
+                    tmp_dir
+                ]
+            )
 
 if __name__ == '__main__':
     build()
