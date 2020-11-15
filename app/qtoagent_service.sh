@@ -1,4 +1,5 @@
 #!/bin/bash
 
-source ${QUANTOTTO_HOME}/.venv/bin/activate
+export QUANTOTTO_HOME=/opt/quantotto
+source /opt/quantotto/.venv/bin/activate
 qtoagentservice
