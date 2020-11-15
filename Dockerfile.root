@@ -36,7 +36,8 @@ RUN systemctl enable qtoagent
 COPY root/dhcpcd.conf /etc/dhcpcd.conf
 COPY root/wpa_supplicant.conf /etc/wpa/wpa_supplicant.conf
 RUN echo 127.0.0.1 qto >> /etc/hosts
-RUN rm -rf /etc/hostname && echo qto > /etc/hostname
+RUN rm -rf /etc/hostname
+RUN echo qto > /etc/hostname
 
 COPY env/quantotto.sh /etc/profile.d/
 RUN chmod ugo+x /etc/profile.d/quantotto.sh
