@@ -2,11 +2,13 @@
 
 Building Raspeberry Pi image for Quantotto Agents deployment.
 
-> NOTE: we assume you have a basic Raspberry Image (either downloaded or manually build)
-> The procedures and tools provided in the repo are adding Quantotto packages
-> and necessary configuration on top of existing OS image
+> NOTE:
+> - We assume you have a base Raspberry Image (either downloaded or manually built with pi-gen tool)
+> - The procedures and tools provided in the repo are adding Quantotto packages and necessary configuration on top of existing OS image
 
-## Pre-requisites (these instructions don't cover how to install these)
+## Pre-requisites
+
+> NOTE:  these instructions don't cover how to install / configure pre-requisites
 
 - Ubuntu 18.04 or later
 - Docker
@@ -64,19 +66,24 @@ pip install docker
 
 # Building Image
 
-- Note the location of your base .img file (we will pass it as argument to build command)
+- Check the location of your base .img file (we will pass it as argument to build command)
 - If you would like to pre-set WiFi information and IP address to allow headless start, modify files under `root/` folder:
-    -- wpa_supplicant.conf (WiFi info)
-    -- dhcpcd.conf (Network settings: IP address, gateway, DNS etc.)
-> NOTE: the build will make sure SSH is automatically configured and started after first boot
-- Run python build script:
+    - wpa_supplicant.conf (WiFi info)
+    - dhcpcd.conf (Network settings: IP address, gateway, DNS etc.)
+
+> NOTE: this build will make sure SSH is automatically configured and started after first boot
+
+- Run python build script (replace `path/to/file.img` with path to base Raspberry OS image file):
 ```bash
-python build.py
+python build.py --base-image-file path/to/file.img
 ```
+
 - Resulting image will be stored in out/quantotto.zip
 
-> Note: you can configure output directory and other build properties by providing command line arguments
-> Please refer to `python build.py --help` for more info:
+## Using build.py CLI tool
+
+- You can configure output directory and other build properties by providing command line arguments
+- Please refer to `python build.py --help` for more info:
 
 ```
 $ python build.py --help
