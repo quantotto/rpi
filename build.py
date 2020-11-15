@@ -79,12 +79,14 @@ def init(tmp_dir: str, out_dir: str, base_image_file: str):
                 out_dir
             ]
         )
-    subprocess.call(
-        shlex.split(
-            f"./extractfs.sh "
-            f"{base_image_file} "
-            f"baseboot.tar baseroot.tar"
-        )
+    subprocess.run(
+        args=[
+            "sh"
+            "./extractfs.sh",
+            base_image_file,
+            "baseboot.tar",
+            "baseroot.tar"
+        ]
     )
     os.makedirs(tmp_dir, exist_ok=True)
     init_qemu()
