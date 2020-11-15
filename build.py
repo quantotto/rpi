@@ -5,7 +5,6 @@ import json
 import os
 import shutil
 import subprocess
-import shlex
 
 
 def init_qemu():
@@ -19,18 +18,23 @@ def init_qemu():
 
 def build_partition_container(image_name: str, partition: str):
     cli = APIClient()
+    out = ""
     for output in cli.build(
         path=".",
+        rm=True,
         tag=image_name,
         dockerfile=f"Dockerfile.{partition}",
         network_mode="host"
     ):
+        out = json.loads(
+            output.decode()
+        ).get("stream", "")
         print(
-            json.loads(
-                output.decode()
-            ).get("stream", ""),
+            out,
             end=''
         )
+    if not out.startswith("Successfully built"):
+        raise Exception("Error building container")
 
 def create_partition_tar(docker_tag: str, outfile: str, retries: int=1):
     if retries < 0:
