@@ -7,6 +7,15 @@ import shutil
 import subprocess
 
 
+def init_qemu():
+    cli = docker.from_env()
+    cli.containers.run(
+        "multiarch/qemu-user-static",
+        command=["--reset", "-p", "yes"],
+        remove=True,
+        privileged=True
+    )
+
 def build_partition_container(image_name: str, partition: str):
     cli = APIClient()
     for output in cli.build(
@@ -48,31 +57,19 @@ def create_partition_tar(docker_tag: str, outfile: str, retries: int=1):
                 cnt.remove()
         break
 
-def build_final_image(in_dir: str, out_dir: str):
+def generate_final_image(in_dir: str, out_dir: str):
     subprocess.run(
         args=[
             "sudo",
-            "./run-build.sh",
+            "./generate.sh",
             in_dir,
             out_dir
         ],
         env=os.environ
     )
 
-@click.command()
-@click.version_option()
-@click.option("--image-prefix", type=str, required=True, default="quantotto/rpi")
-@click.option("--tmp-dir", type=str, required=True, default="./tmp")
-@click.option("--out-dir", type=str, required=True, default="./out")
-@click.option("--keep-tmp", is_flag=True, default=False)
-def build(image_prefix: str, tmp_dir: str, out_dir: str, keep_tmp: bool):
-    """Build Quantotto Raspberry Pi image
-    with all the pre-requisites and Quantotto
-    application packages
-    """
-    print(f"Building with temp dir={tmp_dir}")
-    try:
-        subprocess.run(
+def init(tmp_dir: str, out_dir: str, base_image_file: str):
+    subprocess.run(
             args=[
                 "sudo",
                 "rm",
@@ -81,14 +78,45 @@ def build(image_prefix: str, tmp_dir: str, out_dir: str, keep_tmp: bool):
                 out_dir
             ]
         )
-        os.makedirs(tmp_dir, exist_ok=True)
+    subprocess.run(
+        args=[
+            "./extractfs.sh",
+            base_image_file,
+            "baseboot.tar",
+            "baseroot.tar"
+        ]
+    )
+    os.makedirs(tmp_dir, exist_ok=True)
+    init_qemu()
+
+@click.command()
+@click.version_option()
+@click.option("--base-image-file", type=str, required=True, prompt=True, help="Path to base Raspberry OS image file")
+@click.option("--docker-image-prefix", type=str, required=True, default="quantotto/rpi", help="docker image tag prefix", show_default=True)
+@click.option("--tmp-dir", type=str, required=True, default="./tmp", help="Temporary directory location", show_default=True)
+@click.option("--out-dir", type=str, required=True, default="./out", help="Image output directory", show_default=True)
+@click.option("--keep-tmp", is_flag=True, default=False, help="Do not delete temporary directory (for script debugging)", show_default=True)
+def build(
+    base_image_file: str,
+    docker_image_prefix: str,
+    tmp_dir: str,
+    out_dir: str,
+    keep_tmp: bool
+):
+    """Build Quantotto Raspberry Pi image
+    with all the pre-requisites and Quantotto
+    application packages
+    """
+    print(f"Building with temp dir={tmp_dir}")
+    try:
+        init(tmp_dir, out_dir, base_image_file)
         partitions = ["root"]
         for p in partitions:
-            image_name = f"{image_prefix}_{p}:latest"
+            image_name = f"{docker_image_prefix}_{p}:latest"
             build_partition_container(image_name, p)
             create_partition_tar(image_name, f"{tmp_dir}/{p}.tar")
-        shutil.copy("boot.tar", f"{tmp_dir}/boot.tar")
-        build_final_image(tmp_dir, out_dir)
+        shutil.copy("baseboot.tar", f"{tmp_dir}/boot.tar")
+        generate_final_image(tmp_dir, out_dir)
         print(f"Image done and saved as {out_dir}/quantotto.zip")
     finally:
         if not keep_tmp:

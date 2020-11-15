@@ -1,6 +1,6 @@
 FROM scratch
 
-ADD root.tar /
+ADD baseroot.tar /
 
 RUN apt-get -yy update && apt-get -yy upgrade
 
