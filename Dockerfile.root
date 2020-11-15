@@ -21,9 +21,11 @@ COPY qto_requirements.txt /tmp/qto_requirements.txt
 
 RUN pip install git+https://github.com/wearefair/protobuf-to-dict#egg=protobuf-to-dict
 RUN pip install -r /tmp/requirements.txt
-RUN pip install -r /tmp/qto_requirements.txt
-
 COPY simple.py ${VIRTUAL_ENV}/lib/python3.7/site-packages/zeep/xsd/types/simple.py
+
+# always install quantotto
+ARG NOCACHE=1
+RUN pip install -r /tmp/qto_requirements.txt
 
 COPY app/run_capture.py ${QUANTOTTO_HOME}/
 COPY app/run_discovery.py ${QUANTOTTO_HOME}/

@@ -1,3 +1,4 @@
+import time
 import docker
 from docker import APIClient
 import click
@@ -24,7 +25,8 @@ def build_partition_container(image_name: str, partition: str):
         rm=True,
         tag=image_name,
         dockerfile=f"Dockerfile.{partition}",
-        network_mode="host"
+        network_mode="host",
+        buildargs={ "NOCACHE": str(int(time.time())) }
     ):
         out = json.loads(
             output.decode()
