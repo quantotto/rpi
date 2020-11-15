@@ -74,6 +74,8 @@ def generate_final_image(in_dir: str, out_dir: str):
     )
 
 def init(tmp_dir: str, out_dir: str, base_image_file: str):
+    if not os.path.exists(base_image_file):
+        raise Exception("Base image file does NOT exist")
     p = subprocess.run(
         args=[
             "sudo",
@@ -138,7 +140,6 @@ def build(
         click.echo(f"Image done and saved as {out_dir}/quantotto.zip")
     finally:
         if not keep_tmp:
-            click.echo(f"Deleting {tmp_dir}")
             subprocess.Popen(
                 args=[
                     "sudo",

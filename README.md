@@ -76,22 +76,31 @@ python build.py
 - Resulting image will be stored in out/quantotto.zip
 
 > Note: you can configure output directory and other build properties by providing command line arguments
-> Please refer to `python build --help` for more info:
+> Please refer to `python build.py --help` for more info:
 
 ```
-i$ python build.py --help
+$ python build.py --help
 Usage: build.py [OPTIONS]
 
   Build Quantotto Raspberry Pi image with all the pre-requisites and
   Quantotto application packages
 
 Options:
-  --version            Show the version and exit.
-  --image-prefix TEXT  [required]
-  --tmp-dir TEXT       [required]
-  --out-dir TEXT       [required]
-  --keep-tmp
-  --help               Show this message and exit.
+  --version                   Show the version and exit.
+  --base-image-file TEXT      Path to base Raspberry OS image file  [required]
+  --docker-image-prefix TEXT  docker image tag prefix  [default:
+                              quantotto/rpi; required]
+
+  --tmp-dir TEXT              Temporary directory location  [default: ./tmp;
+                              required]
+
+  --out-dir TEXT              Image output directory  [default: ./out;
+                              required]
+
+  --keep-tmp                  Do not delete temporary directory (for script
+                              debugging)  [default: False]
+
+  --help                      Show this message and exit.
 ```
 
 
