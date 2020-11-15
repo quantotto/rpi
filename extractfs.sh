@@ -15,7 +15,6 @@ LOOPDEV=""
 trap onerror ERR
 
 function cleanup() {
-    echo "Cleaning up"
     mount | grep "${LOOPDEV}" | awk '{ print $3 }' | xargs -r sudo umount
     losetup -a | grep "${IMAGE_FILE}" | awk -F: '{ print $1 }' | xargs -r sudo losetup -d
     sudo rm -rf tmpboot
@@ -23,6 +22,7 @@ function cleanup() {
 }
 
 function onerror() {
+    echo "Error extracting file systems"
     cleanup
     sudo rm -rf ${BOOT_TAR}
     sudo rm -rf ${ROOT_TAR}

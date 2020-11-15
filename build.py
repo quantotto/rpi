@@ -120,12 +120,16 @@ def build(
     print(f"Building with temp dir={tmp_dir}")
     try:
         init(tmp_dir, out_dir, base_image_file)
+        click.echo("Initialized environment")
         partitions = ["root"]
         for p in partitions:
             image_name = f"{docker_image_prefix}_{p}:latest"
+            click.echo(f"Building container for {p} FS")
             build_partition_container(image_name, p)
+            click.echo(f"Creating tar for {p} FS")
             create_partition_tar(image_name, f"{tmp_dir}/{p}.tar")
         shutil.copy("baseboot.tar", f"{tmp_dir}/boot.tar")
+        click.echo(f"Assembling file systems into image")
         generate_final_image(tmp_dir, out_dir)
         print(f"Image done and saved as {out_dir}/quantotto.zip")
     finally:
