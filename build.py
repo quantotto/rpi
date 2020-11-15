@@ -31,7 +31,7 @@ def build_partition_container(image_name: str, partition: str):
         ).get("stream", "")
         click.echo(
             out,
-            end=''
+            nl=False
         )
     if not out.startswith("Successfully tagged"):
         raise Exception("Error building container")
@@ -48,7 +48,7 @@ def create_partition_tar(docker_tag: str, outfile: str, retries: int=1):
             cnt = cli.containers.run(docker_tag, detach=True)
             click.echo("Writing image tar")
             with open(outfile, "wb") as tar:
-                with click.progressbar(length=2*1024*1024*1024) as bar:
+                with click.progressbar(length=1.88*1024*1024*1024) as bar:
                     for chunk in cnt.export():
                         size = tar.write(chunk)
                         bar.update(size)
