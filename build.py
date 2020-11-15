@@ -33,7 +33,7 @@ def build_partition_container(image_name: str, partition: str):
             out,
             end=''
         )
-    if not out.startswith("Successfully built"):
+    if not out.startswith("Successfully tagged"):
         raise Exception("Error building container")
 
 def create_partition_tar(docker_tag: str, outfile: str, retries: int=1):
