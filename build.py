@@ -62,11 +62,11 @@ def create_partition_tar(docker_tag: str, outfile: str, retries: int=1):
                 cnt.remove()
         break
 
-def generate_final_image(in_dir: str, out_dir: str):
+def assemble_final_image(in_dir: str, out_dir: str):
     subprocess.run(
         args=[
             "sudo",
-            "./generate.sh",
+            "./assemble.sh",
             in_dir,
             out_dir
         ],
@@ -136,7 +136,7 @@ def build(
             create_partition_tar(image_name, f"{tmp_dir}/{p}.tar")
         shutil.copy("baseboot.tar", f"{tmp_dir}/boot.tar")
         click.echo(f"Assembling file systems into image")
-        generate_final_image(tmp_dir, out_dir)
+        assemble_final_image(tmp_dir, out_dir)
         click.echo(f"Image done and saved as {out_dir}/quantotto.zip")
     finally:
         if not keep_tmp:

@@ -129,9 +129,11 @@ OLDIMGID="$(grep PARTUUID "${ROOTFS_DIR}/etc/fstab" | awk -F- '{ print $1 }' | a
 
 sed -i "s/${OLDIMGID}-01/${BOOT_PARTUUID}/" "${ROOTFS_DIR}/etc/fstab"
 sed -i "s/${OLDIMGID}-02/${ROOT_PARTUUID}/" "${ROOTFS_DIR}/etc/fstab"
-
 sed -i "s/${OLDIMGID}-02/${ROOT_PARTUUID}/" "${ROOTFS_DIR}/boot/cmdline.txt"
 
+echo -e "127.0.0.1\tqto" >> "${ROOTFS_DIR}/etc/hosts"
+rm -rf "${ROOTFS_DIR}/etc/hostname"
+echo "qto" > "${ROOTFS_DIR}/etc/hostname"
 
 on_chroot << EOF
 if [ -x /etc/init.d/fake-hwclock ]; then
