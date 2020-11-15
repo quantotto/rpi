@@ -48,7 +48,7 @@ def create_partition_tar(docker_tag: str, outfile: str, retries: int=1):
             cnt = cli.containers.run(docker_tag, detach=True)
             click.echo("Writing image tar")
             with open(outfile, "wb") as tar:
-                with click.progressbar(length=1.88*1024*1024*1024) as bar:
+                with click.progressbar(length=int(1.88*1024*1024*1024)) as bar:
                     for chunk in cnt.export():
                         size = tar.write(chunk)
                         bar.update(size)
