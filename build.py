@@ -29,7 +29,7 @@ def build_partition_container(image_name: str, partition: str):
         out = json.loads(
             output.decode()
         ).get("stream", "")
-        print(
+        click.echo(
             out,
             end=''
         )
@@ -46,7 +46,7 @@ def create_partition_tar(docker_tag: str, outfile: str, retries: int=1):
         retries_left -= 1
         try:
             cnt = cli.containers.run(docker_tag, detach=True)
-            print("Writing image tar")
+            click.echo("Writing image tar")
             with open(outfile, "wb") as tar:
                 with click.progressbar(length=2*1024*1024*1024) as bar:
                     for chunk in cnt.export():
@@ -85,10 +85,11 @@ def init(tmp_dir: str, out_dir: str, base_image_file: str):
     )
     if p.returncode != 0:
         raise Exception("Error in init()")
+    click.echo("Creating tars for image partitions")
     p = subprocess.run(
         args=[
             "bash",
-            "./extractfs.sh",
+            "./tar_partitions.sh",
             base_image_file,
             "baseboot.tar",
             "baseroot.tar"
@@ -97,7 +98,9 @@ def init(tmp_dir: str, out_dir: str, base_image_file: str):
     if p.returncode != 0:
         raise Exception("Error in init()")
     os.makedirs(tmp_dir, exist_ok=True)
+    click.echo("Initializing QEMU")
     init_qemu()
+    click.echo("QEMU ready")
 
 @click.command()
 @click.version_option()
@@ -117,10 +120,11 @@ def build(
     with all the pre-requisites and Quantotto
     application packages
     """
-    print(f"Building with temp dir={tmp_dir}")
+    click.echo(f"Building with temp dir={tmp_dir}")
     try:
+        click.echo("Initializing")
         init(tmp_dir, out_dir, base_image_file)
-        click.echo("Initialized environment")
+        click.echo("Environment is ready")
         partitions = ["root"]
         for p in partitions:
             image_name = f"{docker_image_prefix}_{p}:latest"
@@ -131,10 +135,10 @@ def build(
         shutil.copy("baseboot.tar", f"{tmp_dir}/boot.tar")
         click.echo(f"Assembling file systems into image")
         generate_final_image(tmp_dir, out_dir)
-        print(f"Image done and saved as {out_dir}/quantotto.zip")
+        click.echo(f"Image done and saved as {out_dir}/quantotto.zip")
     finally:
         if not keep_tmp:
-            print(f"Deleting {tmp_dir}")
+            click.echo(f"Deleting {tmp_dir}")
             subprocess.Popen(
                 args=[
                     "sudo",

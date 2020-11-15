@@ -22,7 +22,7 @@ function cleanup() {
 }
 
 function onerror() {
-    echo "Error extracting file systems"
+    echo "Error creating tars for partitions"
     cleanup
     sudo rm -rf ${BOOT_TAR}
     sudo rm -rf ${ROOT_TAR}
@@ -31,20 +31,27 @@ function onerror() {
 sudo rm -rf ${BOOT_TAR}
 sudo rm -rf ${ROOT_TAR}
 
+echo "Creating loop device"
 losetup -a | grep "${IMAGE_FILE}" | awk -F: '{ print $1 }' | xargs -r sudo losetup -d
 sudo losetup -fP ${IMAGE_FILE}
 LOOPDEV=$(losetup -a | grep "${IMAGE_FILE}" | awk -F: '{ print $1 }')
 
+echo "Using ${LOOPDEV} device"
+
+echo "Creating temp folders"
 sudo rm -rf tmpboot
 sudo rm -rf tmproot
 
 mkdir -p tmpboot
 mkdir -p tmproot
 
+echo "Mounting partitions"
 sudo mount ${LOOPDEV}p1 ./tmpboot
 sudo mount ${LOOPDEV}p2 ./tmproot
 
+echo "Creating tar archives for partitions"
 sudo tar cf ${BOOT_TAR} -C ./tmpboot --numeric-owner --no-ignore-command-error .
 sudo tar cf ${ROOT_TAR} -C ./tmproot --numeric-owner --no-ignore-command-error .
 
 cleanup
+echo "tar_partitions.sh success"

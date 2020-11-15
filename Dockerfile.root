@@ -27,10 +27,17 @@ COPY simple.py ${VIRTUAL_ENV}/lib/python3.7/site-packages/zeep/xsd/types/simple.
 
 COPY app/run_capture.py ${QUANTOTTO_HOME}/
 COPY app/run_discovery.py ${QUANTOTTO_HOME}/
+COPY app/qtoagent_service.sh ${QUANTOTTO_HOME}/
+COPY app/qtoagent.service /lib/systemd/system/
+RUN chown -R pi:pi ${QUANTOTTO_HOME}
+RUN chmod ugo+x /${QUANTOTTO_HOME}/qtoagent_service.sh
+RUN systemctl enable qtoagent
+RUN systemctl daemon-reload
 
 COPY root/dhcpcd.conf /etc/dhcpcd.conf
 COPY root/wpa_supplicant.conf /etc/wpa/wpa_supplicant.conf
-
+RUN echo 127.0.0.1 qto >> /etc/hosts
+RUN rm -rf /etc/hostname && echo qto > /etc/hostname
 
 CMD ["bash"]
 
