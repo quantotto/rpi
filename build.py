@@ -81,7 +81,7 @@ def init(tmp_dir: str, out_dir: str, base_image_file: str):
         )
     subprocess.run(
         args=[
-            "sh"
+            "sh",
             "./extractfs.sh",
             base_image_file,
             "baseboot.tar",
