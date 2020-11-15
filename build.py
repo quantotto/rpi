@@ -70,24 +70,28 @@ def generate_final_image(in_dir: str, out_dir: str):
     )
 
 def init(tmp_dir: str, out_dir: str, base_image_file: str):
-    subprocess.run(
-            args=[
-                "sudo",
-                "rm",
-                "-rf",
-                tmp_dir,
-                out_dir
-            ]
-        )
-    subprocess.run(
+    p = subprocess.run(
         args=[
-            "sh",
+            "sudo",
+            "rm",
+            "-rf",
+            tmp_dir,
+            out_dir
+        ]
+    )
+    if p.returncode != 0:
+        raise Exception("Error in init()")
+    p = subprocess.run(
+        args=[
+            "bash",
             "./extractfs.sh",
             base_image_file,
             "baseboot.tar",
             "baseroot.tar"
         ]
     )
+    if p.returncode != 0:
+        raise Exception("Error in init()")
     os.makedirs(tmp_dir, exist_ok=True)
     init_qemu()
 
