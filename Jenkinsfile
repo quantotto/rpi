@@ -22,9 +22,8 @@ node {
     stage('RPI Image build') {
         env.VIRTUAL_ENV = "/var/lib/jenkins/.venv"
         env.PATH = "${env.VIRTUAL_ENV}/bin:${env.PATH}"
-        sh 'echo "VIRTUAL_ENV=${VIRTUAL_ENV}"'
-        sh 'echo "PATH=${PATH}"'
-        /* python build.py --base-image-file /var/lib/jenkins/2020-11-11-Raspbian-lite.img 
-        chmod ugo+r out""" */
+
+        sh 'python build.py --base-image-file /var/lib/jenkins/2020-11-11-Raspbian-lite.img'
+        sh 'chmod ugo+r out'
     }
 }
