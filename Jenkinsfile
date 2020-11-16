@@ -24,7 +24,9 @@ node {
             VIRTUAL_ENV = "/var/lib/jenkins/.venv"
             PATH = "${env.VIRTUAL_ENV}/bin:${env.PATH}"
         }
-        sh """python build.py --base-image-file /var/lib/jenkins/2020-11-11-Raspbian-lite.img
+        sh """echo \"VIRTUAL_ENV=${VIRTUAL_ENV}\"
+        echo \"PATH=${PATH}\"
+        python build.py --base-image-file /var/lib/jenkins/2020-11-11-Raspbian-lite.img
         chmod ugo+r out"""
     }
 }
