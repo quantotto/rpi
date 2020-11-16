@@ -15,10 +15,14 @@ LOOPDEV=""
 trap onerror ERR
 
 function cleanup() {
-    mount | grep "${LOOPDEV}" | awk '{ print $3 }' | xargs -r sudo umount
-    sudo losetup -a | grep "${IMAGE_FILE}" | awk -F: '{ print $1 }' | xargs -r sudo losetup -d
-    sudo rm -rf tmpboot
-    sudo rm -rf tmproot
+    if [[ $LOOPDEV = /dev/loop* ]]; then
+        mount | grep "${LOOPDEV}" | awk '{ print $3 }' | xargs -r sudo umount
+    fi
+    if [ ! -z ${IMAGE_FILE} ]; then
+        sudo losetup -a | grep "${IMAGE_FILE}" | awk -F: '{ print $1 }' | xargs -r sudo losetup -d
+    fi
+    [ -d ./tmpboot ] && sudo rm -rf tmpboot
+    [ -d ./tmproot ] && sudo rm -rf tmproot
 }
 
 function onerror() {
