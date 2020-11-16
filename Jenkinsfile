@@ -20,11 +20,9 @@ node {
     }
 
     stage('RPI Image build') {
-        sh """source /var/lib/jenkins/.venv/bin/activate
-        python build.py --base-image-file /var/lib/jenkins/2020-11-11-Raspbian-lite.img
-        chmod ugo+r out"""
-    }
-
-    stage('Publish OVA') {
+        withPythonEnv('/var/lib/jenkins/.venv') {
+            sh """python build.py --base-image-file /var/lib/jenkins/2020-11-11-Raspbian-lite.img
+            chmod ugo+r out"""
+        }
     }
 }
