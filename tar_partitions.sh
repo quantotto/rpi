@@ -16,7 +16,7 @@ trap onerror ERR
 
 function cleanup() {
     mount | grep "${LOOPDEV}" | awk '{ print $3 }' | xargs -r sudo umount
-    losetup -a | grep "${IMAGE_FILE}" | awk -F: '{ print $1 }' | xargs -r sudo losetup -d
+    sudo losetup -a | grep "${IMAGE_FILE}" | awk -F: '{ print $1 }' | xargs -r sudo losetup -d
     sudo rm -rf tmpboot
     sudo rm -rf tmproot
 }
@@ -32,9 +32,9 @@ sudo rm -rf ${BOOT_TAR}
 sudo rm -rf ${ROOT_TAR}
 
 echo "Creating loop device"
-losetup -a | grep "${IMAGE_FILE}" | awk -F: '{ print $1 }' | xargs -r sudo losetup -d
+sudo losetup -a | grep "${IMAGE_FILE}" | awk -F: '{ print $1 }' | xargs -r sudo losetup -d
 sudo losetup -fP ${IMAGE_FILE}
-LOOPDEV=$(losetup -a | grep "${IMAGE_FILE}" | awk -F: '{ print $1 }')
+LOOPDEV=$(sudo losetup -a | grep "${IMAGE_FILE}" | awk -F: '{ print $1 }')
 
 echo "Using ${LOOPDEV} device"
 
