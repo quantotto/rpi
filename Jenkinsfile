@@ -24,6 +24,5 @@ node {
         env.PATH = "${env.VIRTUAL_ENV}/bin:${env.PATH}"
 
         sh 'python build.py --base-image-file /var/lib/jenkins/2020-11-11-Raspbian-lite.img'
-        sh 'chmod ugo+r out'
     }
 }
