@@ -20,7 +20,7 @@ node {
     }
 
     stage('RPI Image build') {
-        withPythonEnv('/var/lib/jenkins/.venv') {
+        withPythonEnv('/var/lib/jenkins/.venv/bin/python') {
             sh """python build.py --base-image-file /var/lib/jenkins/2020-11-11-Raspbian-lite.img
             chmod ugo+r out"""
         }
