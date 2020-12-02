@@ -27,8 +27,6 @@ COPY simple.py ${VIRTUAL_ENV}/lib/python3.7/site-packages/zeep/xsd/types/simple.
 ARG NOCACHE=1
 RUN pip install -r /tmp/qto_requirements.txt
 
-COPY app/run_capture.py ${QUANTOTTO_HOME}/
-COPY app/run_discovery.py ${QUANTOTTO_HOME}/
 COPY app/qtoagent_service.sh ${QUANTOTTO_HOME}/
 COPY app/qtoagent.service /lib/systemd/system/
 RUN chown -R pi:pi ${QUANTOTTO_HOME}
