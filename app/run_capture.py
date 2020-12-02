@@ -10,7 +10,7 @@ QUANTOTTO_HOME = os.getenv("QUANTOTTO_HOME")
 cap_mgr = None
 
 def exit_gracefully(signum, frame):
-   cap_mgr.stop_all()
+   cap_mgr.stop()
 
 signal.signal(signal.SIGINT, exit_gracefully)
 signal.signal(signal.SIGTERM, exit_gracefully)
